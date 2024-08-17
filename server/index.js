@@ -1,6 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import cors from "cors";
+import connectDB from "./mongoDB/connect.js";
 
 dotenv.config();
 
@@ -12,11 +13,15 @@ app.get("/", async (req, res) => {
   res.send("Hello Form Dall-i");
 });
 
-const startServer = async () => [
-  app.listen(8080, () => {
-    console.log("Server started on pots http://localhost:8080");
-  }),
-];
+const startServer = async () => {
+  try {
+    connectDB(process.env.MONGODB_URI);
 
-
+    app.listen(8080, () =>
+      console.log("Server Started on pots http://localhost:8080")
+    );
+  } catch (error) {
+    console.log(error);
+  }
+};
 startServer();
