@@ -4,9 +4,11 @@
     "cors": "^2.8.5",
     "express": "^4.19.2"
   },
-  
-    "scripts": {
-      "start": "node index.js",  
-      "watch": "nodemon index.js"  
-    }
+  "scripts": {
+    "start": "node index.js",
+    "watch": "nodemon index.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
 }
