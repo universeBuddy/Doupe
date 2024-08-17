@@ -2,8 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background:linear-gradient(#073940 0%, black 40%) #000;
-  @apply text-white min-h-dvh;
+*{
+  font-family: 'Inter', sans-serif;
 }
-  
+
+@media screen and(min-width:480xpx){
+  .card:nth-child(7n+1){
+    grid-column: auto/span 2;
+    grid-row: auto/span 2;
+  }
+}
+.prompt::-webkit-scrollbar{
+  width: 5px;
+}
+
+.prompt::-webkit-scrollbar-thumb{
+  background-color: #666e75;
+  border-radius: 5px;
+
+}
