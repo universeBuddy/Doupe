@@ -1,5 +1,4 @@
 import express from "express";
-
 import * as dotenv from "dotenv";
 import { OpenAI } from "openai";
 
@@ -14,12 +13,13 @@ const configuration = new OpenAI({ apiKey: process.env.OPENAI_KEY });
 router.route("/").get((req, res) => {
   res.send("hello");
 });
+
 router.route("/").post(async (req, res) => {
+  const { prompt } = req.body;
   try {
-    // const { prompt } = req.body;
     const aiResponse = await configuration.images.generate({
-      prompt:"A superman fly in galaxy",
-      n: 1,
+      prompt:"image of superman",
+      n:1,
       size: "1024x1024",
       response_format: "b64_json",
     });
