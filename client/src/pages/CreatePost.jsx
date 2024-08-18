@@ -11,21 +11,39 @@ const CreatePost = () => {
     prompt: "",
     photo: "",
   });
-  const [genratingImg, setGeratingImg] = useState(false);
+  const [generatingImg, setGeneratingImg] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const genrateImage = () => {
+  const genrateImage = async () => {
+    if (form.prompt) {
+      try {
+        setGeneratingImg(true);
+        const response = await fetch("http://localhost:8080/api/v1/dalle", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: form.prompt }),
+        });
 
-
-    
+        const data = await response.json();
+        setForm({ ...form, photo: `data:image/jpeg;base64,${data.photo}` });
+      } catch (error) {
+        alert(error);
+      } finally {
+        setGeneratingImg(false);
+      }
+    } 
+    else{
+      alert("please enter prompt")
+    }
   };
   const handleSubmit = () => {};
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   const handleSupriseMe = () => {
-    const randomPrompt = getRandomPrompt(from.prompt);
-
+    const randomPrompt = getRandomPrompt(form.randomPrompt);
     setForm({ ...form, prompt: randomPrompt });
   };
 
@@ -56,7 +74,7 @@ const CreatePost = () => {
             placeholder="teaddy bear shopping in the japan"
             vlaue={form.prompt}
             handleChange={handleChange}
-            isSupriseMe 
+            isSupriseMe
             handleSupriseMe={handleSupriseMe}
           />
 
@@ -75,7 +93,7 @@ const CreatePost = () => {
               />
             )}
 
-            {genratingImg && (
+            {generatingImg && (
               <div className="absoulte inset-0 z-0 flex justify-center items-center bg-[rgba(0,0,0,0.5)] rounded-lg">
                 <Loader />
               </div>
@@ -89,7 +107,7 @@ const CreatePost = () => {
             onClick={genrateImage}
             className="text-white bg-green-700 font-medium rounded-md text-sm w-full sm:w-auto px-5 py-2.5 text-center"
           >
-            {genratingImg ? "Genrating..." : "Genrate Image"}
+            {generatingImg ? "Genrating..." : "Genrate Image"}
           </button>
         </div>
 
