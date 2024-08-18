@@ -7,5 +7,5 @@ const Post =new mongoose.Schema({
     photo:{type:String,required:true},
 })
 
-const PostSchema = mongoose.modal('Post',Post);
+const PostSchema = mongoose.model('Post',Post);
 export default PostSchema;
